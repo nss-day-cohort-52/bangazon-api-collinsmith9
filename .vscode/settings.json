@@ -10,5 +10,6 @@
             "name": "db",
             "database": "db.sqlite3"
         }
-    ]
+    ],
+    "python.linting.enabled": false
 }
