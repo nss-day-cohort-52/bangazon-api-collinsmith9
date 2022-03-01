@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.contrib.auth.models import User
 from django.db.models import Count
 from rest_framework.viewsets import ViewSet
@@ -169,8 +170,8 @@ class ProductView(ViewSet):
 
         if number_sold:
             products = products.annotate(
-                order_count=Count('orders')
-            ).filter(order_count__lt=number_sold)
+                order_count=Count('orders', filter=~Q(orders__payment_type=None))
+            ).filter(order_count__gte=number_sold)
 
         if order is not None:
             order_filter = f'-{order}' if direction == 'desc' else order
